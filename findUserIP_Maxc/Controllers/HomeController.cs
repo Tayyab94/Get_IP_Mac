@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using findUserIP_Maxc.Models;
 using System.Net;
 using System.Net.NetworkInformation;
+using Microsoft.AspNetCore.Http;
 
 namespace findUserIP_Maxc.Controllers
 {
@@ -23,6 +24,10 @@ namespace findUserIP_Maxc.Controllers
         public IActionResult Index()
         {
 
+            string af = HttpContext.Connection.RemoteIpAddress.ToString();
+        
+            
+            // string s=Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
             IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
 
             string IPAddress = Convert.ToString(ipHostInfo.AddressList.FirstOrDefault(address =>
@@ -32,7 +37,7 @@ namespace findUserIP_Maxc.Controllers
 
             string msc = getMachAccdress();
 
-            ViewBag.info = $"IP => {IPAddress} _ Host Name => {MachineName} _ Mac-Address  {msc}";
+            ViewBag.info = $"IP => {IPAddress} _ Host Name => {MachineName} _ Mac-Address  {msc} _ Remote User Ip {af}";
 
             return View();
         }
